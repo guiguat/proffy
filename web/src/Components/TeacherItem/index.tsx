@@ -3,36 +3,44 @@ import whatsappIcon from "../../assets/images/icons/whatsapp.svg";
 
 import "./styles.css";
 
-const TeacherItem: React.FC = () => {
+export interface Teacher {
+  id: number;
+  avatar: string;
+  bio: string;
+  cost: number;
+  name: string;
+  subject: string;
+  whatsapp: string;
+}
+
+interface ITeacherItemProps {
+  teacher: Teacher;
+}
+
+const TeacherItem: React.FC<ITeacherItemProps> = ({ teacher }) => {
   return (
     <article className="teacher-item">
       <header>
-        <img
-          src="https://avatars1.githubusercontent.com/u/43298753?s=460&u=eb9341f0144f88c7c43c2dc220b617e81f039a1b&v=4"
-          alt="Guilherme Guatura"
-        />
+        <img src={teacher.avatar} alt={teacher.name} />
         <div>
-          <strong>Guilherme Guatura</strong>
-          <span>Informática</span>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
         </div>
       </header>
-      <p>
-        Entusiasta das melhores tecnologias do mercado atual
-        <br />
-        <br />
-        Te ensinarei a fazer versionamento de codigo (com Winrar),
-        desenvolvimento de aplicativos para Windows Phone e outras técnologias
-        atuais.
-      </p>
+      <p>{teacher.bio}</p>
       <footer>
         <p>
           Preço/hora
-          <strong>R$80,00</strong>
+          <strong>R${teacher.cost.toFixed(2)}</strong>
         </p>
-        <button type="button">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://api.whatsapp.com/send?phone=${teacher.whatsapp}`}
+        >
           <img src={whatsappIcon} alt="Whatsapp" />
           Entrar em contato
-        </button>
+        </a>
       </footer>
     </article>
   );
