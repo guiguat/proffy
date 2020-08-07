@@ -33,7 +33,7 @@ const StudyTabs: React.FC = () => {
         inactiveBackgroundColor: "#fafafc",
         activeBackgroundColor: "#ebebf5",
         inactiveTintColor: "#c1bccc",
-        activeTintColor: "#32264d",
+        activeTintColor: "#8257e5",
       }}
     >
       <Screen
