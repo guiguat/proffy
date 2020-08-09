@@ -86,6 +86,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 16,
   },
+  favorited: {
+    backgroundColor: "#e33d3d",
+  },
 });
 
 export default styles;
