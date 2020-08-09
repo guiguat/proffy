@@ -6,27 +6,35 @@ import unfavoriteIcon from "../../assets/images/icons/unfavorite.png";
 import whatsappIcon from "../../assets/images/icons/whatsapp.png";
 import { RectButton } from "react-native-gesture-handler";
 
-const TeacherItem: React.FC = () => {
+export interface ITeacher {
+  name: string;
+  cost: number;
+  id: number;
+  avatar: string;
+  subject: string;
+  whatsapp: string;
+  bio: string;
+}
+
+interface ITeacherItemProps {
+  teacher: ITeacher;
+}
+
+const TeacherItem: React.FC<ITeacherItemProps> = ({ teacher }) => {
   return (
     <View style={styles.container}>
       <View style={styles.profile}>
-        <Image
-          style={styles.avatar}
-          source={{ uri: "https://github.com/guiguat.png" }}
-        />
+        <Image style={styles.avatar} source={{ uri: teacher.avatar }} />
         <View style={styles.profileInfo}>
-          <Text style={styles.name}>Guilherme Guatura</Text>
-          <Text style={styles.subject}>Informática</Text>
+          <Text style={styles.name}>{teacher.name}</Text>
+          <Text style={styles.subject}>{teacher.subject}</Text>
         </View>
       </View>
-      <Text style={styles.bio}>
-        16 yro software development student at COTIL - UNICAMP and design
-        enthusiast
-      </Text>
+      <Text style={styles.bio}>{teacher.bio}</Text>
       <View style={styles.footer}>
         <Text style={styles.price}>
           Preço/hora {"   "}
-          <Text style={styles.priceValue}>R$ 20,00</Text>
+          <Text style={styles.priceValue}>R$ {teacher.cost.toFixed(2)}</Text>
         </Text>
         <View style={styles.buttonsContainer}>
           <RectButton style={[styles.favoriteButton, styles.favorited]}>
