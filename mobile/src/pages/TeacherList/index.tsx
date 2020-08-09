@@ -1,16 +1,31 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
-
+import { Feather } from "@expo/vector-icons";
 import styles from "./styles";
 import PageHeader from "../../components/PageHeader";
 import TeacherItem from "../../components/TeacherItem";
-import { ScrollView, TextInput } from "react-native-gesture-handler";
+import {
+  ScrollView,
+  TextInput,
+  BorderlessButton,
+  RectButton,
+} from "react-native-gesture-handler";
 
 const TeacherList: React.FC = () => {
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+  function toggleFiltersVisible() {
+    setIsFiltersVisible(!isFiltersVisible);
+  }
   return (
     <View style={styles.container}>
-      <PageHeader title="Proffys disponíveis">
+      <PageHeader
+        title="Proffys disponíveis"
+        headerRight={
+          <BorderlessButton onPress={toggleFiltersVisible}>
+            <Feather name="filter" size={20} color="#fff" />
+          </BorderlessButton>
+        }
+      >
         {isFiltersVisible && (
           <View style={styles.searchForm}>
             <Text style={styles.label}>Matéria</Text>
@@ -37,6 +52,9 @@ const TeacherList: React.FC = () => {
                 />
               </View>
             </View>
+            <RectButton style={styles.submitButton}>
+              <Text style={styles.submitButtonText}>Filtrar</Text>
+            </RectButton>
           </View>
         )}
       </PageHeader>

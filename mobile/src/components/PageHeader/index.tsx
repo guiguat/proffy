@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { View, Image, Text } from "react-native";
 
 import styles from "./styles";
@@ -9,9 +9,14 @@ import { useNavigation } from "@react-navigation/native";
 
 interface IPageHeaderProps {
   title: string;
+  headerRight?: ReactNode;
 }
 
-const PageHeader: React.FC<IPageHeaderProps> = ({ title, children }) => {
+const PageHeader: React.FC<IPageHeaderProps> = ({
+  title,
+  children,
+  headerRight,
+}) => {
   const navigation = useNavigation();
 
   function handleGoBack() {
@@ -26,7 +31,10 @@ const PageHeader: React.FC<IPageHeaderProps> = ({ title, children }) => {
         </BorderlessButton>
         <Image source={logoImg} resizeMode="contain" />
       </View>
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>{title}</Text>
+        {headerRight}
+      </View>
       {children}
     </View>
   );
