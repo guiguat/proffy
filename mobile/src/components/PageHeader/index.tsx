@@ -11,7 +11,7 @@ interface IPageHeaderProps {
   title: string;
 }
 
-const PageHeader: React.FC<IPageHeaderProps> = ({ title }) => {
+const PageHeader: React.FC<IPageHeaderProps> = ({ title, children }) => {
   const navigation = useNavigation();
 
   function handleGoBack() {
@@ -27,6 +27,7 @@ const PageHeader: React.FC<IPageHeaderProps> = ({ title }) => {
         <Image source={logoImg} resizeMode="contain" />
       </View>
       <Text style={styles.title}>{title}</Text>
+      {children}
     </View>
   );
 };
