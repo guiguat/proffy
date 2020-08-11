@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import db from "../database/connection";
 
 export default class ClassesController {
-  async index(request: Request, response: Response) {
+  static async index(request: Request, response: Response) {
     const totalConnections = await db("connections").count("* as total");
 
     const { total } = totalConnections[0];
@@ -11,7 +11,7 @@ export default class ClassesController {
     return response.json({ total });
   }
 
-  async create(request: Request, response: Response) {
+  static async create(request: Request, response: Response) {
     const { prof_id } = request.body;
 
     await db("connections").insert({

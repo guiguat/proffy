@@ -10,7 +10,7 @@ interface IScheduleItem {
 }
 
 export default class ClassesController {
-  async index(request: Request, response: Response) {
+  static async index(request: Request, response: Response) {
     const filters = request.query;
 
     const subject = filters.subject as string;
@@ -41,7 +41,7 @@ export default class ClassesController {
     return response.json(classes);
   }
 
-  async create(request: Request, response: Response) {
+  static async create(request: Request, response: Response) {
     const {
       name,
       avatar,
