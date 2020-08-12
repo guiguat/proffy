@@ -9,17 +9,18 @@ const authMiddleware = async (
 ) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
+  if (authHeader == null) {
     return res.status(401).send({ error: "Token não enviado" });
   }
 
-  const [scheme, token] = authHeader.split(" ");
+  const token = authHeader.split(" ")[1];
 
   try {
-    const decoded: any = await promisify(jwt.verify)(token, "secret");
-
+    const decoded: any = await promisify(jwt.verify)(
+      token,
+      String(process.env.ACCESS_TOKEN_SECRET)
+    );
     req.userId = decoded.id;
-
     return next();
   } catch (err) {
     return res.status(401).send({ error: "Token invalido" });
