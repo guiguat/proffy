@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { promisify } from "util";
 import { NextFunction, Request, Response } from "express";
 
-module.exports = async (
+const authMiddleware = async (
   req: Request | any,
   res: Response,
   next: NextFunction
@@ -10,7 +10,7 @@ module.exports = async (
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).send({ error: "No token provided" });
+    return res.status(401).send({ error: "Token não enviado" });
   }
 
   const [scheme, token] = authHeader.split(" ");
@@ -22,6 +22,8 @@ module.exports = async (
 
     return next();
   } catch (err) {
-    return res.status(401).send({ error: "Token invalid" });
+    return res.status(401).send({ error: "Token invalido" });
   }
 };
+
+export default authMiddleware;
