@@ -15,13 +15,10 @@ routes.get("/connections", ConnectionsController.index);
 
 routes.post("/users", UsersController.create);
 routes.get("/auth", UsersController.auth);
-routes.use(authMiddleware);
-routes.get("/me", async (req, res) => {
+routes.get("/me", authMiddleware, async (req, res) => {
   try {
     const { userId }: any = req;
-
     const user = await db("user").select("*").where("id", userId);
-
     return res.json({ user });
   } catch (err) {
     return res.status(400).json({ error: "Can't get user information" });
