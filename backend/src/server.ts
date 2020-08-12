@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import routes from "./routes";
-
+require("dotenv").config();
 interface ResponseError extends Error {
   status?: number;
 }
