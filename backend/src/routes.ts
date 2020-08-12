@@ -12,6 +12,6 @@ routes.post("/connections", ConnectionsController.create);
 routes.get("/connections", ConnectionsController.index);
 
 routes.post("/users", UsersController.create);
-routes.get("/authenticate", UsersController.auth);
+routes.get("/auth", UsersController.auth);
 
 export default routes;
