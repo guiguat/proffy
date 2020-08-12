@@ -1,6 +1,7 @@
 import express from "express";
 import ClassesController from "./controllers/ClassesController";
 import ConnectionsController from "./controllers/ConnectionsController";
+import UsersController from "./controllers/UsersController";
 
 const routes = express.Router();
 
@@ -9,5 +10,8 @@ routes.get("/classes", ClassesController.index);
 
 routes.post("/connections", ConnectionsController.create);
 routes.get("/connections", ConnectionsController.index);
+
+routes.post("/users", UsersController.create);
+routes.get("/authenticate", UsersController.auth);
 
 export default routes;
