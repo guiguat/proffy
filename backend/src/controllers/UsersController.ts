@@ -12,7 +12,6 @@ interface IUser {
 export default class UsersController {
   static async create(req: Request, res: Response, next: NextFunction) {
     const { name, email, password }: IUser = req.body;
-
     try {
       const securePassword = bcrypt.hashSync(password, bcrypt.genSaltSync(13));
       await db("user").insert({ name, email, password: securePassword });
@@ -20,7 +19,5 @@ export default class UsersController {
     } catch (err) {
       next(err);
     }
-
-    res.status(201).json({ message: "Usuario criado com sucesso!" });
   }
 }
