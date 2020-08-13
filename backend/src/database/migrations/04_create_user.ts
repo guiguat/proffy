@@ -6,6 +6,8 @@ export async function up(knex: Knex) {
     table.string("name").notNullable().unique();
     table.string("email").notNullable();
     table.string("password").notNullable();
+    table.string("pwd_reset_token");
+    table.date("pwd_reset_expires");
   });
 }
 export async function down(knex: Knex) {
