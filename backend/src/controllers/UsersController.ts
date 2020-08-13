@@ -3,7 +3,6 @@ import { Request, Response, NextFunction } from "express";
 import db from "../database/connection";
 import bcrypt from "bcrypt";
 import { genToken } from "../utils/jwt";
-import IMailProvider from "../providers/IMailProvider";
 import crypto from "crypto";
 import MailtrapMailProvider from "../providers/MailtrapMailProvider";
 
