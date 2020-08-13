@@ -10,7 +10,3 @@ export interface IMessage {
   template: string;
   context: object;
 }
-
-export default interface IMailProvider {
-  sendMail(message: IMessage, onSend: (err: any) => void): Promise<void>;
-}
