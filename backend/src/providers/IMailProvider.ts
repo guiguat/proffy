@@ -7,9 +7,10 @@ export interface IMessage {
   to: IAdress;
   from: IAdress;
   subject: string;
-  body: string;
+  template: string;
+  context: object;
 }
 
 export default interface IMailProvider {
-  sendMail(message: IMessage): Promise<void>;
+  sendMail(message: IMessage, onSend: (err: any) => void): Promise<void>;
 }
