@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 import convertHourToMinutes from "../utils/convertHourToMinutes";
 import db from "../database/connection";
@@ -10,7 +10,7 @@ interface IScheduleItem {
 }
 
 export default class ClassesController {
-  static async index(request: Request, response: Response) {
+  static async index(request: Request, response: Response, next: NextFunction) {
     const filters = request.query;
 
     const subject = filters.subject as string;
@@ -25,23 +25,31 @@ export default class ClassesController {
 
     const timeInMinutes = convertHourToMinutes(time);
 
-    const classes = await db("classes")
-      .whereExists(function () {
-        this.select("class_schedule.*")
-          .from("class_schedule")
-          .whereRaw("`class_schedule`.`class_id` = `classes`.`id`")
-          .whereRaw("`class_schedule`.`weekday` = ??", Number(weekday))
-          .whereRaw("`class_schedule`.`from` <= ??", [timeInMinutes])
-          .whereRaw("`class_schedule`.`to` > ??", [timeInMinutes]);
-      })
-      .where("classes.subject", "=", subject)
-      .join("professor", "classes.prof_id", "=", "professor.id")
-      .select(["classes.*", "professor.*"]);
+    try {
+      const classes = await db("classes")
+        .whereExists(function () {
+          this.select("class_schedule.*")
+            .from("class_schedule")
+            .whereRaw("`class_schedule`.`class_id` = `classes`.`id`")
+            .whereRaw("`class_schedule`.`weekday` = ??", Number(weekday))
+            .whereRaw("`class_schedule`.`from` <= ??", [timeInMinutes])
+            .whereRaw("`class_schedule`.`to` > ??", [timeInMinutes]);
+        })
+        .where("classes.subject", "=", subject)
+        .join("professor", "classes.prof_id", "=", "professor.id")
+        .select(["classes.*", "professor.*"]);
 
-    return response.json(classes);
+      return response.json(classes);
+    } catch (error) {
+      next(error);
+    }
   }
 
-  static async create(request: Request, response: Response) {
+  static async create(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
     const {
       name,
       avatar,
@@ -87,12 +95,8 @@ export default class ClassesController {
 
       return response.status(201).send();
     } catch (error) {
-      console.log(error);
       await trx.rollback();
-
-      return response.status(400).json({
-        error: "Unexpected error while creating new class",
-      });
+      next(error);
     }
   }
 }
