@@ -12,7 +12,7 @@ const routes = express.Router();
 
 routes.post("/classes", ClassesController.create);
 routes.get("/classes", ClassesController.index);
-routes.put("/classes", ClassesController.update);
+routes.put("/classes", authMiddleware, ClassesController.update);
 
 routes.post("/connections", ConnectionsController.create);
 routes.get("/connections", ConnectionsController.index);

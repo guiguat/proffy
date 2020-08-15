@@ -104,11 +104,12 @@ export default class ClassesController {
   }
 
   static async update(
-    request: Request,
+    request: Request | any,
     response: Response,
     next: NextFunction
   ) {
-    const { uid, whatsapp, bio, subject, cost, schedule } = request.body;
+    const { whatsapp, bio, subject, cost, schedule } = request.body;
+    const uid = request.userId;
 
     const trx = await db.transaction();
 
