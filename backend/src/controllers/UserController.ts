@@ -25,21 +25,12 @@ export default class UserController {
   static async index(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
-      const [user]: IUser[] = await db("user").select("*").where("id", "=", id);
-      return res.json({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      });
+      const [user]: IUser[] = await db("user")
+        .select("id", "name", "email")
+        .where("id", "=", id);
+      return res.json(user);
     } catch (error) {
       next(error);
     }
-  }
-
-  static async update(req: Request, res: Response, next: NextFunction) {
-    // Alterar horário/dias de disponibilidade
-    // Alterar o número de WhatsApp
-    // Alterar sua biografia
-    // Alterar seu valor por hora de aula
   }
 }
