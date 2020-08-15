@@ -10,7 +10,7 @@ const authController = new AuthController();
 
 const routes = express.Router();
 
-routes.post("/classes", ClassesController.create);
+routes.post("/classes", authMiddleware, ClassesController.create);
 routes.get("/classes", ClassesController.index);
 routes.put("/classes", authMiddleware, ClassesController.update);
 
