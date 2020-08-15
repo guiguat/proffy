@@ -4,7 +4,7 @@ import ConnectionsController from "./controllers/ConnectionsController";
 import AuthController from "./controllers/AuthController";
 import db from "./database/connection";
 import authMiddleware from "./middlewares/auth";
-import UsersController from "./controllers/UsersController";
+import UserController from "./controllers/UserController";
 
 const authController = new AuthController();
 
@@ -12,11 +12,13 @@ const routes = express.Router();
 
 routes.post("/classes", ClassesController.create);
 routes.get("/classes", ClassesController.index);
+routes.put("/classes", ClassesController.update);
 
 routes.post("/connections", ConnectionsController.create);
 routes.get("/connections", ConnectionsController.index);
 
-routes.post("/users", UsersController.create);
+routes.post("/user", UserController.create);
+routes.get("/user/:id", UserController.index);
 
 routes.get("/auth", authController.login);
 routes.get("/auth/reset_password", authController.forgotPassword);
