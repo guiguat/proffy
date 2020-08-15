@@ -23,7 +23,7 @@ routes.post("/connections", ConnectionsController.create);
 routes.get("/connections", ConnectionsController.index);
 
 routes.post("/user", UserController.create);
-routes.get("/user/:id", UserController.index);
+routes.get("/user/:uid", UserController.index);
 
 routes.get("/auth", authController.login);
 routes.get("/auth/reset_password", authController.forgotPassword);
