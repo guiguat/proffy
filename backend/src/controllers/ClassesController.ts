@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import convertHourToMinutes from "../utils/convertHourToMinutes";
 import db from "../database/connection";
+import paginate from "../utils/pagination";
 
 interface IScheduleItem {
   weekday: number;
@@ -12,12 +13,19 @@ interface IScheduleItem {
 export default class ClassesController {
   static async index(request: Request, response: Response, next: NextFunction) {
     const filters = request.query;
-
+    const page = parseInt(filters.page as string);
+    const limit = parseInt(filters.limit as string);
     const subject = filters.subject as string;
     const weekday = filters.weekday as string;
     const time = filters.time as string;
 
-    if (!filters.weekday || !filters.subject || !filters.time) {
+    if (
+      !filters.weekday ||
+      !filters.subject ||
+      !filters.time ||
+      !filters.page ||
+      !filters.limit
+    ) {
       return response.status(400).json({
         error: "Missing filters to search classes",
       });
@@ -39,7 +47,7 @@ export default class ClassesController {
         .join("professor", "classes.prof_id", "=", "professor.id")
         .select(["classes.*", "professor.*"]);
 
-      return response.json(classes);
+      return response.json(paginate(classes, page, limit));
     } catch (error) {
       next(error);
     }
