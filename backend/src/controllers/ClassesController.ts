@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import convertHourToMinutes, {
   convertMinutesToHour,
-} from "../utils/convertHourToMinutes";
+} from "../utils/timeConversion";
 import db from "../database/connection";
 import paginate from "../utils/pagination";
 
