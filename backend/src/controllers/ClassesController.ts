@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
-import convertHourToMinutes from "../utils/convertHourToMinutes";
+import convertHourToMinutes, {
+  convertMinutesToHour,
+} from "../utils/convertHourToMinutes";
 import db from "../database/connection";
 import paginate from "../utils/pagination";
 
@@ -46,8 +48,31 @@ export default class ClassesController {
         .where("classes.subject", "=", subject)
         .join("professor", "classes.prof_id", "=", "professor.id")
         .select(["classes.*", "professor.*"]);
-
-      return response.json(paginate(classes, page, limit));
+      const classesWithSchedule = await Promise.all(
+        classes.map(async (class_item) => {
+          const schedule = await db("classes")
+            .join(
+              "class_schedule",
+              "classes.id",
+              "=",
+              "class_schedule.class_id"
+            )
+            .select(["class_schedule.*"])
+            .where("class_schedule.class_id", class_item.id);
+          const scheduleTimeConverted = schedule.map((scheduleItem) => {
+            return {
+              ...scheduleItem,
+              from: convertMinutesToHour(scheduleItem.from),
+              to: convertMinutesToHour(scheduleItem.to),
+            };
+          });
+          return {
+            ...class_item,
+            schedule: scheduleTimeConverted,
+          };
+        })
+      );
+      return response.json(paginate(classesWithSchedule, page, limit));
     } catch (error) {
       next(error);
     }
