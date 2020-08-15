@@ -51,6 +51,7 @@ export default class ClassesController {
     next: NextFunction
   ) {
     const {
+      uid,
       name,
       avatar,
       whatsapp,
@@ -68,6 +69,7 @@ export default class ClassesController {
         avatar,
         whatsapp,
         bio,
+        user_id: uid,
       });
 
       const prof_id = insertedProfessorsIds[0];
@@ -88,6 +90,55 @@ export default class ClassesController {
           to: convertHourToMinutes(scheduleItem.to),
         };
       });
+
+      await trx("class_schedule").insert(classSchedule);
+
+      await trx.commit();
+
+      return response.status(201).send();
+    } catch (error) {
+      console.log(error);
+      await trx.rollback();
+      next(error);
+    }
+  }
+
+  static async update(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    const { uid, whatsapp, bio, subject, cost, schedule } = request.body;
+
+    const trx = await db.transaction();
+
+    try {
+      const updatedProfessorId = await trx("professor")
+        .update({
+          whatsapp,
+          bio,
+        })
+        .where("user_id", "=", uid);
+
+      const updatedClassesId = await trx("classes")
+        .update({
+          subject,
+          cost,
+        })
+        .where("prof_id", "=", updatedProfessorId);
+
+      const classSchedule = schedule.map((scheduleItem: IScheduleItem) => {
+        return {
+          class_id: updatedClassesId,
+          weekday: scheduleItem.weekday,
+          from: convertHourToMinutes(scheduleItem.from),
+          to: convertHourToMinutes(scheduleItem.to),
+        };
+      });
+
+      await trx("class_schedule")
+        .where("class_id", "=", updatedClassesId)
+        .del();
 
       await trx("class_schedule").insert(classSchedule);
 
