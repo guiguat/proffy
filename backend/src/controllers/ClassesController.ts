@@ -130,7 +130,6 @@ export default class ClassesController {
 
       return response.status(201).send();
     } catch (error) {
-      console.log(error);
       await trx.rollback();
       next(error);
     }
@@ -178,7 +177,7 @@ export default class ClassesController {
 
       await trx.commit();
 
-      return response.status(201).send();
+      return response.status(200).send();
     } catch (error) {
       await trx.rollback();
       next(error);
