@@ -16,7 +16,9 @@ export default class AuthController {
       }
 
       if (bcrypt.compareSync(password, user.password))
-        return res.status(202).json({ uid: user.id, token: genToken(user.id) });
+        return res
+          .status(202)
+          .json({ uid: user.id, name: user.name, token: genToken(user.id) });
       else {
         return res.status(400).json({ error: "Senha inválida" });
       }
