@@ -29,15 +29,4 @@ routes.get("/auth", authController.login);
 routes.get("/auth/reset_password", authController.forgotPassword);
 routes.post("/auth/reset_password", authController.resetPassword);
 
-//just for testing
-routes.get("/me", authMiddleware, async (req, res) => {
-  try {
-    const { userId }: any = req;
-    const user = await db("user").select("*").where("id", userId);
-    return res.json({ user });
-  } catch (err) {
-    return res.status(400).json({ error: "Can't get user information" });
-  }
-});
-
 export default routes;
