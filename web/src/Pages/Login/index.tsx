@@ -4,6 +4,7 @@ import "./styles.css";
 import Input from "../../Components/Input";
 import logoImg from "../../assets/images/logo.svg";
 import purpleHeartIcon from "../../assets/images/icons/purple-heart.svg";
+import Button from "../../Components/Button";
 
 const Login: React.FC = () => {
   return (
@@ -23,14 +24,14 @@ const Login: React.FC = () => {
                 <input name="remember-me" id="remember-me" type="checkbox" />
                 <label htmlFor="remember-me">Lembrar-me</label>
               </div>
-              <a href="/">Esqueci minha senha</a>
+              <a href="/forgot-password">Esqueci minha senha</a>
             </div>
-            <button>Entrar</button>
+            <Button>Entrar</Button>
           </fieldset>
         </form>
         <footer>
           <p>
-            Não tem conta? <br /> <a href="/">Cadastre-se</a>
+            Não tem conta? <br /> <a href="/sign-up">Cadastre-se</a>
           </p>
           <span>
             É de graça <img src={purpleHeartIcon} alt="coração" />
