@@ -1,0 +1,100 @@
+.login-page{
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  grid-template-areas: "header" "main";
+  height: 100vh;
+}
+
+.login-page header{
+  grid-area: "header";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: white;
+  padding: 4rem;
+  background-image: url("../../assets/images/background.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.login-page header img{
+  height: 9.7rem;
+}
+
+.login-page main{
+  grid-area: "main";
+  display: flex;
+  flex-direction: column;
+  padding: 4rem;
+}
+
+#login-form legend{
+  line-height: 2.7rem;
+  font: 700 2.4rem Poppins;
+  color: var(--color-text-title);
+  margin-bottom: 2rem;
+}
+
+#login-form fieldset{
+  border: 0;
+}
+
+.login-extra{
+  display: flex;
+  padding: 2rem 0;
+  align-items: center;
+  justify-content: space-between;
+  font: 400 1.4rem Poppins;
+} 
+
+.login-extra input{
+  margin-right: 1rem;
+}
+
+.login-extra > div{
+  display: flex;
+  align-items: center;
+}
+
+.login-extra a, label{
+  text-decoration: none;
+  color: var(--color-text-complement);
+}
+
+.login-extra a:hover{
+  color: var(--color-text-base);
+}
+
+.login-page button{
+  background: var(--color-secundary);
+  color: white;
+  width: 100%;
+  padding: 1.5rem 0;
+  border: 0;
+  border-radius: .8rem;
+  font: 600 1.6rem Archivo;
+  line-height: 2.6rem;
+  cursor: pointer;
+}
+
+.login-page button:hover{
+  background: var(--color-secundary-dark);
+}
+
+.login-page main footer{
+  width: 100%;
+  margin-top: 4rem;
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-base);
+}
+
+.login-page main footer span{
+  color: var(--color-text-complement);
+  font-size: 1.4rem;
+}
+.login-page main footer span img{
+  opacity: .5 ;
+}
