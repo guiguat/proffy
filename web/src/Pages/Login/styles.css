@@ -81,7 +81,11 @@
   font-size: 1.4rem;
 }
 .login-page main footer span img{
-  opacity: .5 ;
+  opacity: .5;
+}
+.login-page main footer a{
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
 @media (min-width: 768px){
